@@ -1,0 +1,130 @@
+{% load static %}
+<!DOCTYPE HTML>
+<!--
+	Alpha by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+<head>
+    <title>Search Results</title>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"/>
+    <link rel="stylesheet" href="{% static 'assets/css/main.css' %}"/>
+    <link rel="stylesheet" href="{% static 'assets/css/main.css' %}"/>
+    <link rel="apple-touch-icon" sizes="180x180" href="{% static 'favicon/apple-touch-icon.png' %}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static 'favicon/favicon-16x16.png' %}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static 'favicon/favicon-16x16.png' %}">
+</head>
+<body class="is-preload">
+<div id="page-wrapper">
+
+    <!-- Header -->
+    <header id="header" class="alt">
+        <h1><a href="{% url 'home' %}">
+            <img src="{% static 'images/logo.png' %}" alt="not found" width="15px">&nbsp;books</a>.py
+        </h1>
+        <nav id="nav">
+            <ul>
+                <li><a href="{% url 'home' %}">Home</a></li>
+                <li><a href="{% url 'about' %}">About</a></li>
+                {% if request.user.is_authenticated %}
+                <li><a href="{% url 'createbook' %}">Create Book</a></li>
+                {% endif %}
+                {% if request.user.is_authenticated %}
+                <li><a href="{% url 'logout' %}" class="button">Sign Out</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Main -->
+    <section id="main" class="container">
+        <section class="container">
+            <form method="get" action="{% url 'search'  %}">
+                {% csrf_token %}
+                <div class="row gtr-uniform gtr-50">
+                    <div class="col-9 col-12-mobilep">
+                        <input type="text" name="query" id="query" value="" placeholder="Search Book"/>
+                    </div>
+                    <div class="col-3 col-12-mobilep">
+                        <input type="submit" value="Search" class="fit" style=""/>
+                    </div>
+                </div>
+            </form>
+        </section>
+
+        <!-- Header -->
+        {% if pdfs %}
+        <header>
+            <h2>Search Results</h2>
+            <p>Have a good time reading.</p>
+        </header>
+        {% endif %}
+
+        {% if not pdfs %}
+        <header>
+            <h2>Search Results</h2>
+            <p>Have a good time reading.</p>
+        </header>
+        <div style="text-align:center;">
+            <h3>No results found.</h3>
+        </div>
+        {% endif %}
+
+        <!-- PDF's -->
+
+        <div class="row">
+            {% for file in pdfs %}
+            <div class="col-6 col-12-narrower">
+                <section class="box special">
+                    <span class="image featured"><img src="{{file.image.url}}" alt=""/></span>
+                    <h3>{{file.title}}</h3>
+                    <p>{{file.author}}</p>
+                    <ul class="actions special">
+                        <li><a href="{{file.pdf.url}}" class="button alt" target="_blank">Read</a></li>
+                        {% if request.user.is_authenticated %}
+                        <li><a href="{% url 'editbook' file.id %}" class="button alt">Edit</a></li>
+                        <li><a href="{% url 'deletebook' file.id %}" class="button alt">Delete</a></li>
+                        {% endif %}
+                    </ul>
+                </section>
+            </div>
+            {% endfor %}
+        </div>
+        <br>
+
+        <!-- Pagination -->
+        <div class="center">
+            {% if pdfs %}
+            <div class="pagination">
+                {% if pdfs.has_previous %}
+                <a href="?query={{query}}&page=1">First</a>
+                <a href="?query={{query}}&page={{pdfs.previous_page_number}}">Previous</a>
+                {% endif %}
+
+                {% for pages in pdfs.paginator.page_range %}
+                <a href="?query={{query}}&page={{pages}}">{{pages}}</a>
+                {% endfor %}
+
+
+                {% if pdf_obj.has_next %}
+                <a href="?query={{query}}&page={{page.next_page_number}}">Next</a>
+                {% endif %}
+            </div>
+            {% endif%}
+        </div>
+    </section>
+</div>
+
+<!-- Scripts -->
+<script src="{% static 'assets/js/jquery.min.js' %}"></script>
+<script src="{% static 'assets/js/jquery.dropotron.min.js' %}"></script>
+<script src="{% static 'assets/js/jquery.scrollex.min.js' %}"></script>
+<script src="{% static 'assets/js/browser.min.js' %}"></script>
+<script src="{% static 'assets/js/breakpoints.min.js' %}"></script>
+<script src="{% static 'assets/js/util.js' %}"></script>
+<script src="{% static 'assets/js/main.js' %}"></script>
+
+</body>
+</html>

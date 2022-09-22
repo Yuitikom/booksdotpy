@@ -1,0 +1,88 @@
+{% load static %}
+<!DOCTYPE HTML>
+<!--
+	Alpha by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+<head>
+    <title>About</title>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"/>
+    <link rel="stylesheet" href="{% static 'assets/css/main.css' %}"/>
+    <link rel="stylesheet" href="{% static 'assets/css/main.css' %}"/>
+    <link rel="apple-touch-icon" sizes="180x180" href="{% static 'favicon/apple-touch-icon.png' %}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static 'favicon/favicon-16x16.png' %}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static 'favicon/favicon-16x16.png' %}">
+</head>
+<body class="is-preload">
+<div id="page-wrapper">
+
+    <!-- Header -->
+    <header id="header" class="alt">
+        <h1><a href="{% url 'home' %}">
+            <img src="{% static 'images/logo.png' %}" alt="not found" width="15px">&nbsp;books</a>.py
+        </h1>
+        <nav id="nav">
+            <ul>
+                <li><a href="{% url 'home' %}">Home</a></li>
+                <li><a href="{% url 'about' %}">About</a></li>
+                {% if request.user.is_authenticated %}
+                <li><a href="{% url 'createbook' %}">Create Book</a></li>
+                {% endif %}
+                {% if request.user.is_authenticated %}
+                <li><a href="{% url 'logout' %}" class="button">Sign Out</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Main -->
+    <section id="main" class="container">
+
+        <!-- Header -->
+        <header>
+            <h2>About</h2>
+            <p>We're no venom snakes!</p>
+        </header>
+
+        <!-- Content -->
+        <div class="box">
+            <span class="image featured"><img src="{% static 'images/booksdotpy.jpg' %}" alt=""/></span>
+
+            <!--  Author About -->
+            <h3>Author</h3>
+            <div class="content">
+                <img src="{% static 'images/me.jpg' %}" width="20%" alt="">
+                <p>I'm Henrique Yuiti, author of this project.
+                    Talking about myself: i'm a self-taught programmer, not only programming, but almost everything i
+                    learnt
+                    the lastest years were being autodidacted. From mathematics to technology, understanding how can
+                    you project ideas into your work was the most valuable thing i had comprehend.</p>
+            </div>
+
+            <!--  Site About -->
+            <h3 style="color: white;">booksdotpython</h3>
+            <p style="color: white;">Books play a huge part on the learning process of everybody. Booksdotpy is aPDF
+                book repository written in
+                Python language and projected with Django framework. On the mission to spread the knowledge for those
+                who
+                search it, we have the compromise to facilitate your journey into the wilds of technology.
+                <br>Good reading!
+            </p>
+        </div>
+    </section>
+</div>
+
+<!-- Scripts -->
+<script src="{% static 'assets/js/jquery.min.js' %}"></script>
+<script src="{% static 'assets/js/jquery.dropotron.min.js' %}"></script>
+<script src="{% static 'assets/js/jquery.scrollex.min.js' %}"></script>
+<script src="{% static 'assets/js/browser.min.js' %}"></script>
+<script src="{% static 'assets/js/breakpoints.min.js' %}"></script>
+<script src="{% static 'assets/js/util.js' %}"></script>
+<script src="{% static 'assets/js/main.js' %}"></script>
+
+</body>
+</html>
